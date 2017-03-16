@@ -2276,7 +2276,7 @@ all:: $(NO_INSTALL)
 bin-wrappers/%: wrap-for-bin.sh
 	@mkdir -p bin-wrappers
 	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-	     -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
+	     -e 's|@@BUILD_DIR@@|$(shell pwd | sed -e "s/'/'\\\''/g")|' \
 	     -e 's|@@PROG@@|$(patsubst test-%,t/helper/test-%,$(@F))|' < $< > $@ && \
 	chmod +x $@
 
